@@ -1,0 +1,41 @@
+<%- include("./part/start.ejs") %>
+    <style>
+        .input-style{
+            border: none;
+            padding: 10px 20px;
+            border: 1px solid var(--bs-primary);
+            outline: none;
+            color: var(--bs-primary);
+            display: block;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .input-style:focus::placeholder{
+            color: var(--bs-primary);
+        }
+        .input-style:focus{
+            background: var(--bs-border-color);
+        }
+    </style>
+    <%- include("./part/style-footer.ejs") %>
+</head>
+<body>
+<%- include("./part/nav-bar.ejs") %>
+
+<div class="container">
+    <h1 style="font-size: 25px; text-align: center;" class="mt-4 text-primary">مرحبا بك في موقع مطرزات فلسطين العالمية</h1>
+    <form action="/signup" method="POST" style="max-width: 700px; margin: auto; text-align: center;" class=" pt-3">
+        <input type="text" placeholder="اسم المستخدم" name="userName" class="input-style mt-3">
+        <input type="email" placeholder="Email" name="email" class="input-style mt-3">
+        <input type="password" placeholder="كلمة السر" name="password" class="input-style mt-3">
+        <input type="password" placeholder="تأكيد كلمة السر" name="passwordConfirmation" class="input-style mt-3">
+        <input type="submit" value="إنشاء حساب" class="btn btn-primary mt-3">
+    </form >
+    <% if(typeof erorr !== "undefined"){ %>
+        <p class="alert alert-primary text-center mt-3">
+            <%= erorr %>
+        </p>
+    <%}%>
+</div>
+<%- include("./part/footer.ejs") %>
+<%- include("./part/end.ejs") %>

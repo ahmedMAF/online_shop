@@ -1,0 +1,78 @@
+<%- include("./part/start.ejs") %>
+    <style>
+        td , th{
+            text-align: center;
+        }
+        tr td:nth-child(1) , tr td:nth-child(2) , tr td:nth-child(3) , tr td:nth-child(6) , tr td:nth-child(5){
+            padding-top: 15px !important;
+        }
+        tr td:nth-child(5) input{
+            background-color: var(--bs-border-color-translucent);
+            width: 100px;
+            padding-left: 10px;
+            border: none;
+            border-bottom: 1px solid var(--bs-primary);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<%- include("./part/nav-bar.ejs") %>
+<div class="hidding">
+    <h1 style="font-size: 25px; text-align: center;" class="mb-4 mt-5 text-primary">سلة مشترياتك</h1>
+</div>
+<div class="container" style="overflow-x: auto;">
+    <% if(data.length > 0){ %>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>الرقم</th>
+                    <th>المنتج</th>
+                    <th>السعر</th>
+                    <th>الكمية</th>
+                    <th>السعر الكلي</th>
+                    <th>تعديل</th>
+                    <th>حذف</th>
+                    <th>طلب</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i = 0 ; i < data.length ; i++){ %>
+                    <tr>
+                        <td><%= i+1 %></td>
+                        <td><%= data[i].name %></td>
+                        <td><%= data[i].price %>$</td>
+                        <form method="POST">
+                            <td><input name="aomunt" type="number" value="<%= data[i].amount %>"></td>
+                            <td><%= data[i].price * data[i].amount %>$</td>
+                            <input type="hidden" name="idd" value="<%= data[i]._id %>">
+                            <td><input type="submit" value="Save" formaction="/cart/save" class="btn btn-primary"></td>
+                            <td><input type="submit" value="Delete" formaction="/cart/delete" class="btn btn-danger"></td>
+                            <td><input type="submit" class="btn btn-success" formaction="/order/adress" value="Order"></td>
+                        </form>
+                    </tr>
+                <%}%>
+            </tbody>
+        </table>
+    <%} else{%>
+        <div class="alert alert-primary text-center" role="alert">
+            ليس لديك أي منتجات حتي يتم عرضها
+        </div>
+    <%}%>
+    <% if(erorrAomuntWhenUpdate.length > 0){ %>
+        <p class="alert alert-primary text-center mt-3"><%= erorrAomuntWhenUpdate %></p>
+    <%}%>
+</div>
+<div class="container">
+    <% if(data.length > 0) {%>
+    <p class="text-primary text-center mt-4" style="font-size: 20px;">حتي نعتمد طلبك بشكل رسمي ، تواصل مع فريق الدعم على أحد الوسائل التالية</p>
+    <ul style="font-size: 30px;" class="px-0 text-center">
+        <a href="https://instagram.com/motarzat.ps.al3almea?igshid=YmMyMTA2M2Y=">
+            <i class="fa-brands fa-instagram ms-3 text-primary"></i></a>
+        <a href="https://www.facebook.com/International.PS.Embroideries/">
+            <i class="fa-brands fa-facebook ms-3 text-primary"></i></a>
+        <a href="https://wa.me/+972595831862"><i class="fa-brands fa-whatsapp ms-3 text-primary"></i></a>
+    </ul>
+    <%}%>
+</div>
+<%- include("./part/end.ejs") %>

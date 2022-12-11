@@ -1,0 +1,61 @@
+<%- include("./part/start.ejs") %>
+    <style>
+        .input-style{
+            border: none;
+            padding: 10px 20px;
+            border: 1px solid var(--bs-primary);
+            outline: none;
+            color: var(--bs-primary);
+            display: block;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .input-style:focus::placeholder{
+            color: var(--bs-primary);
+        }
+        .input-style:focus{
+            background: var(--bs-border-color);
+        }
+    </style>
+    <%- include("./part/style-footer.ejs") %>
+</head>
+<body>
+<%- include("./part/nav-bar.ejs") %>
+
+<div class="container mt-5">
+    <form action="/order/add" method="POST" style="max-width: 700px;" class="mx-auto">
+        <input type="text" placeholder="العنوان" name="adress" class="input-style mb-3">
+        <input type="text" placeholder="رقم الهاتف" name="phones" class="input-style">
+        <input type="submit" value="طلب" class="btn btn-primary mt-4 ordrer" style="margin: auto; display: block;">
+    </form>
+    <p class="text-primary text-center mt-4" style="font-size: 20px;">حتي نعتمد طلبك بشكل رسمي ، الرجاء التواصل مع فريق الدعم على أحد الوسائل التالية</p>
+    <ul style="font-size: 30px;" class="px-0 text-center">
+        <a href="https://instagram.com/motarzat.ps.al3almea?igshid=YmMyMTA2M2Y=">
+            <i class="fa-brands fa-instagram ms-3 text-primary"></i></a>
+        <a href="https://www.facebook.com/International.PS.Embroideries/">
+            <i class="fa-brands fa-facebook ms-3 text-primary"></i></a>
+        <a href="https://wa.me/+972595831862"><i class="fa-brands fa-whatsapp ms-3 text-primary"></i></a>
+    </ul>
+</div>
+<%- include("./part/footer.ejs") %>
+<script>
+    let submit = document.querySelector(".ordrer");
+    let input = document.querySelector(".input-style");
+    submit.onclick = function(e){
+        if(input.value == ""){
+            e.preventDefault();
+            if(document.querySelector(".alert") === null){
+                let p = document.createElement("p");
+                p.classList.add("alert");
+                p.classList.add("alert-primary");
+                p.classList.add("text-center");
+                p.classList.add("mt-3");
+                p.classList.add("container");
+                p.appendChild(document.createTextNode("please write your adress"));
+                document.body.appendChild(p);
+            }
+
+        }
+    };
+</script>
+<%- include("./part/end.ejs") %>

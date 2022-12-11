@@ -1,0 +1,69 @@
+<%- include("./part/start.ejs") %>
+    <style>
+        td , th{
+            text-align: center;
+        }
+        tr td:nth-child(1) , tr td:nth-child(4) , tr td:nth-child(2) ,
+        tr td:nth-child(3) , tr td:nth-child(6) , tr td:nth-child(5){
+            padding-top: 15px !important;
+        }
+        .no-wrap{
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+<%- include("./part/nav-bar.ejs") %>
+<div class="hidding">
+    <h1 style="font-size: 25px; text-align: center;" class="mb-4 mt-5 text-primary">الطلبات</h1>
+</div>
+<div class="container" style="overflow-x: auto;">
+    <table class="table table-striped">
+        <% if(data.length > 0) {%>
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>المقدار</th>
+                <th>التكلفة</th>
+                <th>العنوان</th>
+                <th>الحالة</th>
+                <th>الوقت</th>
+                <th>إلغاء</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0 ; i < data.length ; i++) {%>
+                <tr>
+                    <td><%= data[i].name %></td>
+                    <td><%= data[i].amount %></td>
+                    <td><%= data[i].amount * data[i].cost %>$</td>
+                    <td><%= data[i].adress %></td>
+                    <td><%= data[i].status %></td>
+                    <td class="no-wrap"><%= new Date(+data[i].time).toISOString().split("T")[0]; %></td>
+                    <form action="/order/delete" method="POST">
+                        <input type="hidden" name="idOrder" value="<%= data[i]._id %>">
+                        <td><input type="submit" value="Cancel" class="btn btn-danger"></td>
+                    </form>
+                </tr>
+            <%}%>
+        </tbody>
+    </table>
+    <%} else{%>
+        <div class="alert alert-primary text-center" role="alert">
+            ليس لديك أي طلبات حتي يتم عرضها
+        </div>
+    <%}%>
+</div>
+<div class="container">
+    <% if(data.length > 0) {%>
+    <p class="text-primary text-center mt-4" style="font-size: 20px;">حتي يتم إعتماد طلباتك بشكل رسمي ، تواصل مع فريق الدعم على إحدي الواسئل التالية</p>
+    <ul style="font-size: 30px;" class="px-0 text-center">
+        <a href="https://instagram.com/motarzat.ps.al3almea?igshid=YmMyMTA2M2Y=">
+            <i class="fa-brands fa-instagram ms-3 text-primary"></i></a>
+        <a href="https://www.facebook.com/International.PS.Embroideries/">
+            <i class="fa-brands fa-facebook ms-3 text-primary"></i></a>
+        <a href="https://wa.me/+972595831862"><i class="fa-brands fa-whatsapp ms-3 text-primary"></i></a>
+    </ul>
+    <%}%>
+</div>
+<%- include("./part/end.ejs") %>

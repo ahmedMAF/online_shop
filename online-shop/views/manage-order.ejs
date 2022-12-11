@@ -1,0 +1,104 @@
+<%- include("./part/start.ejs") %>
+    <style>
+        td , th{
+            text-align: center;
+        }
+        tr td:nth-child(1) , tr td:nth-child(2) , tr td:nth-child(3) , tr td:nth-child(4) , tr td:nth-child(5),
+        tr td:nth-child(9) , tr td:nth-child(7){
+            padding-top: 15px !important;
+        }
+        tr td:nth-child(7) input{
+            background-color: var(--bs-border-color-translucent);
+            width: 120px;
+            border: navajowhite;
+            border-bottom: 1px solid var(--bs-primary);
+            outline: none;
+            padding: 3px 10px;
+        }
+        form input{
+            width: 103px;
+            margin-top: 20px;
+        }
+        .search{
+            border: none;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--bs-primary);
+            outline: none;
+            color: var(--bs-primary);
+        }
+        .search:focus::placeholder{
+            color: var(--bs-primary);
+        }
+        .no-wrap{
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+<%- include("./part/nav-bar.ejs") %>
+
+<div class="container">
+    <div class="mt-4 row text-center justify-content-center">
+        <form action="/admin/manage/orders" method="GET" class="col-md-2 col-6">
+            <input class="btn btn-primary" type="submit" value="الكل" formaction="/admin/manage/orders">
+        </form>
+    
+        <form action="/admin/manage/orders" method="POST" class="col-md-2 col-6">
+            <input type="hidden" name="filter" value="قيد المعالجة">
+            <input class="btn btn-primary" type="submit" value="قيد المعالجة">
+        </form>
+    
+        <form action="/admin/manage/orders" method="POST" class="col-md-2 col-6">
+            <input type="hidden" name="filter" value="مرسل">
+            <input class="btn btn-primary" type="submit" value="مرسل">
+        </form>
+    
+        <form action="/admin/manage/orders" method="POST" class="col-md-2 col-6">
+            <input type="hidden" name="filter" value="مكتمل">
+            <input class="btn btn-primary" type="submit" value="مكتمل">
+        </form>
+    </div>
+
+    <form action="/admin/manage/order/searsh" method="POST" style="margin: 0px;" class="row mt-5 justify-content-center container">
+        <input class="col-md-5 search" type="email" name="email" placeholder="Email">
+        <input class="btn btn-primary col-md-2 ms-md-4 mt-md-0 mt-3" type="submit" value="بحث">
+    </form>
+
+    <div style="overflow-x: auto;">
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>الاسم</th>
+                    <th>الكمية</th>
+                    <th>التكلفة</th>
+                    <th>العنوان</th>
+                    <th>الحالة</th>
+                    <th>الوقت</th>
+                    <th>حفظ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i = 0 ; i < data.length ; i++){ %>
+                    <tr>
+                        <td><%= data[i].emailUser %></td>
+                        <td><%= data[i].name %></td>
+                        <td><%= data[i].amount %></td>
+                        <td><%= +data[i].cost * +data[i].amount %>$</td>
+                        <td><%= data[i].adress %></td>
+                        <form action="/admin/orders/save" method="POST">
+                            <td><input type="text" name="status" value="<%= data[i].status %>"></td>
+                            <input type="hidden" name="orderId" value="<%= data[i]._id %>">
+                            <td class="no-wrap"><%= new Date(+data[i].time).toISOString().split("T")[0]; %></td>
+                            <td>
+                                <input type="submit" value="Save" class="btn btn-primary">
+                            </td>
+                        </form>
+                    </tr>
+                <%}%>
+            </tbody>
+        </table>
+    </div>
+</div>
+<%- include("./part/end.ejs") %>

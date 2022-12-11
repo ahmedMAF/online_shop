@@ -1,0 +1,67 @@
+<%- include("./part/start.ejs") %>
+    <style>
+        .input-style{
+            border: none;
+            padding: 10px 20px;
+            border: 1px solid var(--bs-primary);
+            outline: none;
+            color: var(--bs-primary);
+            display: block;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .input-style:focus::placeholder , .input-tex-area:focus::placeholder , select:focus{
+            color: var(--bs-primary);
+            background: var(--bs-border-color);
+        }
+        .input-style:focus , .input-tex-area:focus{
+            background: var(--bs-border-color);
+        }
+        .input-tex-area{
+            color: var(--bs-primary);
+            display: block;
+            outline: none;
+            width: 100%;
+            padding: 10px 20px;
+            height: 100px;
+            border: 1px solid var(--bs-primary);
+            border-radius: 5px;
+        }
+        select{
+            border-radius: 5px;
+            width: 100%;
+            padding: 10px 20px;
+            border: 1px solid var(--bs-primary);
+        }
+    </style>
+</head>
+<body>
+<%- include("./part/nav-bar.ejs") %>
+
+<div class="container mt-5">
+    <h1 style="font-size: 25px; text-align: center;" class="mb-4 mt-5 text-primary">إضافة منتج</h1>
+    <form action="/admin/add" method="POST" enctype="multipart/form-data"
+    style="max-width: 700px;" class="mx-auto">
+        <input class="input-style mt-3" type="text" name="nameProduct" placeholder="الاسم">
+        <input class="input-style mt-3" type="number" name="price" placeholder="السعر">
+        <textarea class="input-tex-area mt-3" name="description" placeholder="الوصف"></textarea>
+        <select class="mt-3" name="catogary" class="form-select-lg mx-auto"
+        aria-label=".form-select-lg example" style="max-width: 700px;" id="filter"
+        aria-placeholder="Choose a catogary">
+            <option value="clothes">ثوب طويل مطرز يدوي</option>
+            <option value="phones">ثوب قصير مطرز يدوي</option>
+            <option value="computers">بلوزة مطرزة يدوي</option>
+            <option value="computers1">طقم رسمي مطرز يدوي</option>
+            <option value="computers2">فستان طويل مطرز يدوي</option>
+            <option value="computers3">فستان قصير مطرز يدوي</option>
+            <option value="computers4">فستان عروس مطرز يدوي</option>
+        </select>
+        <input class="form-control mt-3" type="file" name="photo">
+        <input type="submit" value="Add product" class="btn btn-primary mt-4" style="margin: auto; display: block;">
+    </form>
+    <% if(addErorr !== undefined){ %>
+        <p class="alert alert-primary text-center mt-3"><%= addErorr %></p>
+    <%}%>
+</div>
+
+<%- include("./part/end.ejs") %>
